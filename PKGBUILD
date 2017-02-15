@@ -18,8 +18,8 @@ md5sums=('SKIP')
 
 package() {
 	cd ${srcdir}
-	install -D -m644 $srcdir/.zshrc ${pkgdir}/etc/skel/.zshrc
-	mkdir -p $pkgdir/etc/skel/.config/
+	install -D -m644 $srcdir/$pkgname/.zshrc ${pkgdir}/etc/skel/.zshrc
+	mkdir -p $pkgdir/usr/share/zsh/scripts
 	cp -r $srcdir/$pkgname/base16-shell $pkgdir/usr/share/zsh/scripts
 	chmod a+x $pkgdir/usr/share/zsh/scripts/base16-shell/*
 }

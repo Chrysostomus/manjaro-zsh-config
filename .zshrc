@@ -74,8 +74,9 @@ alias repoup='repo-add local-repo.db.tar.gz *.pkg.tar.*'
 
 ## Theming section  
 autoload -U compinit colors zcalc
-compinit
 colors
+# This command initializes zsh-completions:
+compinit
 
 # Set the window title based on command run
 function preexec() {

@@ -9,7 +9,7 @@ url="https://github.com/Chrysostomus/$pkgname"
 license=('MIT')
 depends=('zsh-autosuggestions'
 	'zsh-syntax-highlighting'
-	'zsh-autosuggestions'
+	'zsh-completions'
 	'zsh-history-substring-search'
 	'zsh')
 makedepends=('git')

@@ -56,9 +56,8 @@ alias repoup='repo-add local-repo.db.tar.gz *.pkg.tar.*'
 
 
 # Theming section  
-autoload -U compinit colors zcalc
+autoload -U compinit zcalc
 compinit
-colors
 
 # Set the window title based on command run
 function preexec() {
@@ -86,7 +85,7 @@ function title() {
 
 
 ## Prompt section
-autoload -U colors zcalc
+autoload -U colors
 # Enable colors in prompt:
 colors
 

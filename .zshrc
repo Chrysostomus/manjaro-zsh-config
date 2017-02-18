@@ -19,9 +19,10 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'       # Case insensiti
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"         # Colored completion (different colors for dirs/files/etc)
 zstyle ':completion:*' rehash true                              # automatically find new executables in path 
 HISTFILE=~/.zhistory
-HISTSIZE=100
-SAVEHIST=100
+HISTSIZE=1000
+SAVEHIST=500
 export EDITOR=/usr/bin/nano
+export VISUAL=/usr/bin/nano
 WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
 
 
@@ -41,7 +42,7 @@ bindkey '^[Od' backward-word                                    #
 bindkey '^[[1;5D' backward-word                                 #
 bindkey '^[[1;5C' forward-word                                  #
 bindkey '^H' backward-kill-word                                 # delete previous word with ctrl+backspace
-
+bindkey '^[[Z' undo                                             # Shift+tab undo last action
 
 ## Alias section 
 alias ls='ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
@@ -94,9 +95,11 @@ colors
 setopt prompt_subst
 
 # Prompt (on left side) similar to default bash prompt, or redhat zsh prompt with colors
- PROMPT="%(!.%{$fg[red]%}[%n@%m %1~]%{$reset_color%}# .%{$fg[green]%}[%n@%m %1~]%{$reset_color%}$ "
- #PROMPT="%{$fg[cyan]%}%~ %(!.#.$) %{$reset_color%}"
-
+ #PROMPT="%(!.%{$fg[red]%}[%n@%m %1~]%{$reset_color%}# .%{$fg[green]%}[%n@%m %1~]%{$reset_color%}$ "
+# Maia prompt
+PROMPT="%B%(!.%{$fg[red]%}.%{$fg[cyan]%})%~%u%b >%{$fg[cyan]%}>%B%(?.%{$fg[cyan]%}.%{$fg[red]%})>%{$reset_color%}%b " 
+# Print some system information when the shell is first started
+echo $(uname -srm) $(lsb_release -rcs)
 ## Prompt on right side:
 #  - shows status of git when in git repository (code adapted from https://techanic.net/2012/12/30/my_git_prompt_for_zsh.html)
 #  - shows exit status of previous command (if previous command finished with an error)

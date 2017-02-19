@@ -79,11 +79,6 @@ function title() {
 }
 
 
-## Prompt section
-autoload -U colors zcalc
-# Enable colors in prompt:
-colors
-
 # enable substitution for prompt
 setopt prompt_subst
 

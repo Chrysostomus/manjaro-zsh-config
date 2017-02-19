@@ -20,7 +20,7 @@ md5sums=('SKIP')
 package() {
 	cd ${srcdir}
 	install -D -m644 $srcdir/$pkgname-$_gitcommit/.zshrc ${pkgdir}/etc/skel/.zshrc
-	install -D -m644 $srcdir/$pkgname-$_gitcommit/.zshrc ${pkgdir}/root/.zshrc
+	install -D -m644 $srcdir/$pkgname-$_gitcommit/rootzshrc ${pkgdir}/root/.zshrc
 	mkdir -p $pkgdir/usr/share/zsh/scripts
 	cp -r $srcdir/$pkgname-$_gitcommit/base16-shell $pkgdir/usr/share/zsh/scripts
 	chmod a+x $pkgdir/usr/share/zsh/scripts/base16-shell/*

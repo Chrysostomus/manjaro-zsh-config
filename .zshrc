@@ -51,7 +51,7 @@ alias x='startx ~/.xinitrc'                                     # Type name of d
 
 # Theming section  
 autoload -U compinit colors zcalc
-compinit
+compinit -d
 colors
 
 # Set the window title based on command run

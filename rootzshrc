@@ -19,7 +19,7 @@ export EDITOR=/usr/bin/nano
 export VISUAL=/usr/bin/nano
 WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
 
-
+alias cp="cp -i"
 ## Keybindings section
 bindkey -e
 bindkey '^[[7~' beginning-of-line                               # Home key

@@ -27,8 +27,8 @@ WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider
 
 ## Keybindings section
 bindkey -e
-bindkey '^[[7~' beginning-of-line                               # Home key
-bindkey '^[[8~' end-of-line                                     # End key
+bindkey '^[[1~' beginning-of-line                               # Home key
+bindkey '^[[4~' end-of-line                                     # End key
 bindkey '^[[2~' overwrite-mode                                  # Insert key
 bindkey '^[[3~' delete-char                                     # Delete key
 bindkey '^[[C'  forward-char                                    # Right key

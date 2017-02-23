@@ -172,6 +172,13 @@ case ${TERM} in
   xterm)
     RPROMPT='$(git_prompt_string)'
     ;;
+  rxvt*)
+    RPROMPT='$(git_prompt_string)'
+    # Use autosuggestion
+    source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+    ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+    ;;  
   *)
     RPROMPT='$(git_prompt_string)'
 	## Base16 Shell color themes.
@@ -188,5 +195,6 @@ case ${TERM} in
 	# Use autosuggestion
 	source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 	ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+  	ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
     ;;
 esac

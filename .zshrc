@@ -30,8 +30,8 @@ WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider
 
 ## Keybindings section
 bindkey -e
-bindkey '^[[1~' beginning-of-line                               # Home key
-bindkey '^[[4~' end-of-line                                     # End key
+bindkey '^[[7~' beginning-of-line                               # Home key
+bindkey '^[[8~' end-of-line                                     # End key
 if [[ "${terminfo[khome]}" != "" ]]; then
   bindkey "${terminfo[khome]}" beginning-of-line                # [Home] - Go to beginning of line
 fi
@@ -59,37 +59,11 @@ bindkey '^[[Z' undo                                             # Shift+tab undo
 alias cp="cp -i"                                                # Confirm before overwriting something
 alias df='df -h'                                                # Human-readable sizes
 alias free='free -m'                                            # Show sizes in MB
-alias x='startx ~/.xinitrc'                                     # Type name of desired desktop after x, xinitrc is configured for it
 
 # Theming section  
 autoload -U compinit colors zcalc
 compinit -d
 colors
-
-# Set the window title based on command run
-function preexec() {
-  title "$1" "%m(%35<...<%~)"
-}
-
-function title() {
-  # escape '%' chars in $1, make nonprintables visible
-  a=${(V)1//\%/\%\%}
-
-  # Truncate command, and join lines.
-  a=$(print -Pn "%40>...>$a" | tr -d "\n")
-
-  case $TERM in
-  screen)
-    print -Pn "\e]2;$a@$2\a" # plain xterm title
-    print -Pn "\ek$a\e\\"      # screen title (in ^A")
-    print -Pn "\e_$2   \e\\"   # screen location
-    ;;
-  xterm*|rxvt)
-    print -Pn "\e]2;$a@$2\a" # plain xterm title
-    ;;
-  esac
-}
-
 
 # enable substitution for prompt
 setopt prompt_subst
@@ -98,6 +72,7 @@ setopt prompt_subst
  #PROMPT="%(!.%{$fg[red]%}[%n@%m %1~]%{$reset_color%}# .%{$fg[green]%}[%n@%m %1~]%{$reset_color%}$ "
 # Maia prompt
 PROMPT="%B%{$fg[cyan]%}%(4~|%-1~/.../%2~|%~)%u%b >%{$fg[cyan]%}>%B%(?.%{$fg[cyan]%}.%{$fg[red]%})>%{$reset_color%}%b " # Print some system information when the shell is first started
+# Print a greeting message when shell is started
 echo $USER@$HOST $(uname -srm) $(lsb_release -rcs)
 ## Prompt on right side:
 #  - shows status of git when in git repository (code adapted from https://techanic.net/2012/12/30/my_git_prompt_for_zsh.html)
@@ -160,8 +135,6 @@ git_prompt_string() {
   [ ! -n "$git_where" ] && echo "%{$fg[red]%} %(?..[%?])"
 }
 
-# Set the right-hand prompt as defined above
-RPROMPT='$(git_prompt_string)'
 # Right prompt with exit status of previous command if not successful
  #RPROMPT="%{$fg[red]%} %(?..[%?])" 
 # Right prompt with exit status of previous command marked with ✓ or ✗
@@ -178,30 +151,42 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;36m'
 export LESS=-r
 
-## Base16 Shell color themes.
-#possible themes: 3024, apathy, ashes, atelierdune, atelierforest, atelierhearth,
-#atelierseaside, bespin, brewer, chalk, codeschool, colors, default, eighties, 
-#embers, flat, google, grayscale, greenscreen, harmonic16, isotope, londontube,
-#marrakesh, mocha, monokai, ocean, paraiso, pop (dark only), railscasts, shapesifter,
-#solarized, summerfruit, tomorrow, twilight
-theme="eighties"
-#Possible variants: dark and light
-shade="dark"
-BASE16_SHELL="/usr/share/zsh/scripts/base16-shell/base16-$theme.$shade.sh"
-[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
-
 
 ## Plugins section: Enable fish style features
 # Use syntax highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Use history substring search
 source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-## bind UP and DOWN arrow keys to history substring search
-#zmodload zsh/terminfo
-#bindkey "$terminfo[kcuu1]" history-substring-search-up
-#bindkey "$terminfo[kcud1]" history-substring-search-down
-#bindkey '^[[A' history-substring-search-up			
-#bindkey '^[[B' history-substring-search-down
-# Use autosuggestion
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+# bind UP and DOWN arrow keys to history substring search
+zmodload zsh/terminfo
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+bindkey '^[[A' history-substring-search-up			
+bindkey '^[[B' history-substring-search-down
+
+case ${TERM} in
+  linux)
+    RPROMPT="%{$fg[red]%} %(?..[%?])" 
+    alias x='startx ~/.xinitrc'      # Type name of desired desktop after x, xinitrc is configured for it
+    ;;
+  xterm)
+    RPROMPT='$(git_prompt_string)'
+    ;;
+  *)
+    RPROMPT='$(git_prompt_string)'
+	## Base16 Shell color themes.
+	#possible themes: 3024, apathy, ashes, atelierdune, atelierforest, atelierhearth,
+	#atelierseaside, bespin, brewer, chalk, codeschool, colors, default, eighties, 
+	#embers, flat, google, grayscale, greenscreen, harmonic16, isotope, londontube,
+	#marrakesh, mocha, monokai, ocean, paraiso, pop (dark only), railscasts, shapesifter,
+	#solarized, summerfruit, tomorrow, twilight
+	theme="eighties"
+	#Possible variants: dark and light
+	shade="dark"
+	BASE16_SHELL="/usr/share/zsh/scripts/base16-shell/base16-$theme.$shade.sh"
+	[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+	# Use autosuggestion
+	source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+	ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+    ;;
+esac

@@ -48,7 +48,7 @@ colors
 # enable substitution for prompt
 setopt prompt_subst
 # bash style prompt 
-PROMPT="[%n@%m %1~]# "
+PROMPT="[%n@%m %1~]# %{$reset_color%"
 # Right prompt with exit status of previous command if not successful
  RPROMPT="%{$fg[red]%} %(?..[%?])" 
 # Color man pages

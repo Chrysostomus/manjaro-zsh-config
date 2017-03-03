@@ -20,12 +20,12 @@ zstyle ':completion:*' rehash true                              # automatically 
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
-HISTFILE=~/.zhistory
+HISTFILE=~/.zhistory                                            # File for history.
 HISTSIZE=1000
 SAVEHIST=500
 export EDITOR=/usr/bin/nano
 export VISUAL=/usr/bin/nano
-WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
+WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word. Really useful for completions of long paths and CTRL+RightArrow
 
 
 ## Keybindings section
@@ -36,7 +36,7 @@ if [[ "${terminfo[khome]}" != "" ]]; then
   bindkey "${terminfo[khome]}" beginning-of-line                # [Home] - Go to beginning of line
 fi
 if [[ "${terminfo[kend]}" != "" ]]; then
-  bindkey "${terminfo[kend]}" end-of-line                      # [End] - Go to end of line
+  bindkey "${terminfo[kend]}" end-of-line                       # [End] - Go to end of line
 fi
 bindkey '^[[2~' overwrite-mode                                  # Insert key
 bindkey '^[[3~' delete-char                                     # Delete key
@@ -60,8 +60,8 @@ alias free='free -m'                                            # Show sizes in 
 
 # Theming section  
 autoload -U compinit colors zcalc
-compinit -d
-colors
+compinit -d                                                     # The "-d" flag speeds up the completion system using a ".zcompdump" file.
+colors                                                          # Enable color support
 
 # enable substitution for prompt
 setopt prompt_subst
@@ -78,15 +78,14 @@ echo $USER@$HOST  $(uname -srm) $(lsb_release -rcs)
 #  - is invisible, if neither is the case
 
 # Modify the colors and symbols in these variables as desired.
-GIT_PROMPT_SYMBOL="%{$fg[blue]%}±"                              # plus/minus     - clean repo
 GIT_PROMPT_PREFIX="%{$fg[green]%}[%{$reset_color%}"
 GIT_PROMPT_SUFFIX="%{$fg[green]%}]%{$reset_color%}"
 GIT_PROMPT_AHEAD="%{$fg[red]%}ANUM%{$reset_color%}"             # A"NUM"         - ahead by "NUM" commits
 GIT_PROMPT_BEHIND="%{$fg[cyan]%}BNUM%{$reset_color%}"           # B"NUM"         - behind by "NUM" commits
 GIT_PROMPT_MERGING="%{$fg_bold[magenta]%}⚡︎%{$reset_color%}"     # lightning bolt - merge conflict
 GIT_PROMPT_UNTRACKED="%{$fg_bold[red]%}●%{$reset_color%}"       # red circle     - untracked files
-GIT_PROMPT_MODIFIED="%{$fg_bold[yellow]%}●%{$reset_color%}"     # yellow circle  - tracked files modified
-GIT_PROMPT_STAGED="%{$fg_bold[green]%}●%{$reset_color%}"        # green circle   - staged changes present = ready for "git push"
+GIT_PROMPT_MODIFIED="%{$fg_bold[yellow]%}●%{$reset_color%}"     # yellow circle  - modified files (which are tracked)
+GIT_PROMPT_STAGED="%{$fg_bold[green]%}●%{$reset_color%}"        # green circle   - staged changes
 
 parse_git_branch() {
   # Show Git branch/tag, or name-rev if on detached head
@@ -127,17 +126,11 @@ git_prompt_string() {
   local git_where="$(parse_git_branch)"
   
   # If inside a Git repository, print its branch and state
-  [ -n "$git_where" ] && echo "$GIT_PROMPT_SYMBOL$(parse_git_state)$GIT_PROMPT_PREFIX%{$fg[yellow]%}${git_where#(refs/heads/|tags/)}$GIT_PROMPT_SUFFIX"
+  [ -n "$git_where" ] && echo "$(parse_git_state)$GIT_PROMPT_PREFIX%{$fg[yellow]%}${git_where#(refs/heads/|tags/)}$GIT_PROMPT_SUFFIX"
   
   # If not inside the Git repo, print exit codes of last command (only if it failed)
   [ ! -n "$git_where" ] && echo "%{$fg[red]%} %(?..[%?])"
 }
-
-# Right prompt with exit status of previous command if not successful
- #RPROMPT="%{$fg[red]%} %(?..[%?])" 
-# Right prompt with exit status of previous command marked with ✓ or ✗
- #RPROMPT="%(?.%{$fg[green]%}✓ %{$reset_color%}.%{$fg[red]%}✗ %{$reset_color%})"
-
 
 # Color man pages
 export LESS_TERMCAP_mb=$'\E[01;32m'
@@ -165,7 +158,7 @@ bindkey '^[[B' history-substring-search-down
 case ${TERM} in
   linux)
     RPROMPT="%{$fg[red]%} %(?..[%?])" 
-    alias x='startx ~/.xinitrc'      # Type name of desired desktop after x, xinitrc is configured for it
+    alias x='startx ~/.xinitrc'                                 # Type name of desired desktop after x, xinitrc is configured for it
     ;;
   xterm)
     RPROMPT='$(git_prompt_string)'
@@ -180,19 +173,19 @@ case ${TERM} in
   *)
     RPROMPT='$(git_prompt_string)'
 	## Base16 Shell color themes.
-	#possible themes: 3024, apathy, ashes, atelierdune, atelierforest, atelierhearth,
-	#atelierseaside, bespin, brewer, chalk, codeschool, colors, default, eighties, 
-	#embers, flat, google, grayscale, greenscreen, harmonic16, isotope, londontube,
-	#marrakesh, mocha, monokai, ocean, paraiso, pop (dark only), railscasts, shapesifter,
-	#solarized, summerfruit, tomorrow, twilight
+	# possible themes: 3024, apathy, ashes, atelierdune, atelierforest, atelierhearth,
+	# atelierseaside, bespin, brewer, chalk, codeschool, colors, default, eighties, 
+	# embers, flat, google, grayscale, greenscreen, harmonic16, isotope, londontube,
+	# marrakesh, mocha, monokai, ocean, paraiso, pop (dark only), railscasts, shapesifter,
+	# solarized, summerfruit, tomorrow, twilight
 	theme="eighties"
-	#Possible variants: dark and light
+	# Possible variants: dark and light
 	shade="dark"
 	BASE16_SHELL="/usr/share/zsh/scripts/base16-shell/base16-$theme.$shade.sh"
 	[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 	# Use autosuggestion
 	source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 	ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-  	ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+  	ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'                  # Default setting: Color of autosuggestion is dark grey. In case this does not work, export TERM=xterm-256color.
     ;;
 esac

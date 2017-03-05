@@ -96,8 +96,8 @@ parse_git_state() {
   # Show different symbols as appropriate for various Git repository states
   # Compose this value via multiple conditional appends.
   local GIT_STATE=""
-  # The "git fetch" command is needed for online git repositories. Without it, the number of commits behind/ahead is WRONG.
-  git fetch 2> /dev/null
+  # The following "git fetch" command is needed for remote git repositories. Without it, the number of commits behind/ahead is probably WRONG. Uncommenting the following line will enable this feature with a noticeable performance cost.
+  #git fetch 2> /dev/null
   local NUM_AHEAD="$(git log --oneline @{u}.. 2> /dev/null | wc -l | tr -d ' ')"
   if [ "$NUM_AHEAD" -gt 0 ]; then
     GIT_STATE=$GIT_STATE${GIT_PROMPT_AHEAD//NUM/$NUM_AHEAD}

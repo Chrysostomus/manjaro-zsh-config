@@ -97,7 +97,7 @@ parse_git_state() {
   # Compose this value via multiple conditional appends.
   local GIT_STATE=""
   # The "git fetch" command is needed for online git repositories. Without it, the number of commits behind/ahead is WRONG.
-  git fetch
+  git fetch 2> /dev/null
   local NUM_AHEAD="$(git log --oneline @{u}.. 2> /dev/null | wc -l | tr -d ' ')"
   if [ "$NUM_AHEAD" -gt 0 ]; then
     GIT_STATE=$GIT_STATE${GIT_PROMPT_AHEAD//NUM/$NUM_AHEAD}

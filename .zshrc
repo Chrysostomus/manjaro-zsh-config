@@ -1,6 +1,3 @@
-[ -r /etc/profile.d/cnf.sh ] && . /etc/profile.d/cnf.sh
-
-
 ## Options section
 setopt correct                                                  # Auto correct mistakes
 setopt extendedglob                                             # Extended globbing. Allows using regular expressions with *
@@ -165,18 +162,21 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 bindkey '^[[A' history-substring-search-up			
 bindkey '^[[B' history-substring-search-down
 
-case ${TERM} in
-  linux)
+case $(basename "$(cat "/proc/$PPID/comm")") in
+  login)
     RPROMPT="%{$fg[red]%} %(?..[%?])" 
     alias x='startx ~/.xinitrc'      # Type name of desired desktop after x, xinitrc is configured for it
     ;;
-  rxvt*)
+  urxvt)
     RPROMPT='$(git_prompt_string)'
     # Use autosuggestion
     source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
     ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
     ;;
+  konsole|qterminal)
+    RPROMPT='$(git_prompt_string)'
+    ;;   
   *)
   	if $(ps -p$PPID| grep -q -e konsole -e qterminal); then
     RPROMPT='$(git_prompt_string)'

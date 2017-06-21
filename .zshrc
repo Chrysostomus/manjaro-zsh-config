@@ -178,7 +178,7 @@ case ${TERM} in
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
     ;;
   *)
-  	if $(ps -p$PPID| grep -q konsole); then
+  	if $(ps -p$PPID| grep -q -e konsole -e qterminal); then
     RPROMPT='$(git_prompt_string)'
     else
         RPROMPT='$(git_prompt_string)'

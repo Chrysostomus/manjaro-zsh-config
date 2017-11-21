@@ -188,11 +188,11 @@ case $(basename "$(cat "/proc/$PPID/comm")") in
 		#embers, flat, google, grayscale, greenscreen, harmonic16, isotope, londontube,
 		#marrakesh, mocha, monokai, ocean, paraiso, pop (dark only), railscasts, shapesifter,
 		#solarized, summerfruit, tomorrow, twilight
-		theme="eighties"
+		#theme="eighties"
 		#Possible variants: dark and light
-		shade="dark"
-		BASE16_SHELL="/usr/share/zsh/scripts/base16-shell/base16-$theme.$shade.sh"
-		[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+		#shade="dark"
+		#BASE16_SHELL="/usr/share/zsh/scripts/base16-shell/base16-$theme.$shade.sh"
+		#[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 		# Use autosuggestion
 		source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 		ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20

@@ -53,10 +53,18 @@ bindkey '^H' backward-kill-word                                 # delete previou
 bindkey '^[[Z' undo                                             # Shift+tab undo last action
 
 ## Alias section 
-alias cp="cp -i"                                                # Confirm before overwriting something
-alias df='df -h'                                                # Human-readable sizes
-alias free='free -m'                                            # Show sizes in MB
+alias cp='cp -i'  					        # Confirm before overwriting something
+alias df='df -h'  					        # Human-readable sizes
+alias du='du -ch'  
+alias free='free -m'   				                # Show sizes in MB
 alias gitu='git add . && git commit && git push'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias ls='ls -h --color=auto'
+alias ll='ls -h -lA --color=auto'
+alias mv='mv -i'  
+alias rm='rm -I --preserve-root'
 
 # Theming section  
 autoload -U compinit colors zcalc

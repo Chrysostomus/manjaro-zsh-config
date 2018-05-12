@@ -53,18 +53,30 @@ bindkey '^H' backward-kill-word                                 # delete previou
 bindkey '^[[Z' undo                                             # Shift+tab undo last action
 
 ## Alias section 
-alias cp='cp -i'  					        # Confirm before overwriting something
-alias df='df -h'  					        # Human-readable sizes
-alias du='du -ch'  
-alias free='free -m'   				                # Show sizes in MB
-alias gitu='git add . && git commit && git push'
-alias grep='grep --color=auto'
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
+alias cp='cp -i'
+alias df='df -h'
+alias du='du -ch'
+alias ln='ln -i'
 alias ls='ls -h --color=auto'
 alias ll='ls -h -lA --color=auto'
-alias mv='mv -i'  
+alias mv='mv -i'
 alias rm='rm -I --preserve-root'
+alias aup='trizen -Syu --aur --noconfirm'
+alias free='free -m'
+alias gitu='git add . && git commit && git push'
+alias gksu='zensu'
+alias grep='grep --color=auto'
+alias grub='sudo vim /etc/default/grub'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias fstab='sudo vim /etc/fstab'
+alias pacup='sudo pacman -Syu --noconfirm'
+alias bleach='bleachbit --preset -c'
+alias gksudo='zensu'
+alias grubup='sudo update-grub'
+alias yaourt='trizen'
+alias paclean='sudo pacman -Rsn $(pacman -Qqdt)'
+alias mkinitcpio='sudo vim /etc/mkinitcpio.conf'
 
 # Theming section  
 autoload -U compinit colors zcalc

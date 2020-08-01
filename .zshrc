@@ -163,7 +163,7 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 bindkey '^[[A' history-substring-search-up			
 bindkey '^[[B' history-substring-search-down
 
-# Apply different settigns for different terminals
+# Apply different settings for different terminals
 case $(basename "$(cat "/proc/$PPID/comm")") in
   login)
     	RPROMPT="%{$fg[red]%} %(?..[%?])" 

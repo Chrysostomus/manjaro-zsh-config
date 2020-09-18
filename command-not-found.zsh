@@ -8,11 +8,13 @@ command_not_found_handler() {
     setopt shwordsplit
     pkg_array=($pkgs[@])
     pkgname="${${(@s:/:)pkg_array}[2]}"
-    printf 'Do you want to Install package %s? (y/N)' $pkgname
-    if read -q "choice?"; then
+    printf 'Do you want to Install package %s? (y/N) ' $pkgname
+    if read -q "choice? "; then
     		echo
     		echo "pamac install @pkgname"
             pamac install $pkgname
+    else
+    		echo " "
     fi
   else
     printf 'zsh: command not found: %s\n' "$cmd"

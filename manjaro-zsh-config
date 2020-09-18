@@ -87,7 +87,7 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
 # Offer to install missing package if command is not found
-if [[ -r /usr/share/zsh/command-not-found.zsh ]]; then
-    source /usr/share/zsh/command-not-found.zsh
+if [[ -r /usr/share/zsh/functions/command-not-found.zsh ]]; then
+    source /usr/share/zsh/functions/command-not-found.zsh
     export PKGFILE_PROMPT_INSTALL_MISSING=1
 fi

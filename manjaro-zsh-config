@@ -86,8 +86,8 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 bindkey '^[[A' history-substring-search-up			
 bindkey '^[[B' history-substring-search-down
 
-# pkgfile
-if [[ -r /usr/share/doc/pkgfile/command-not-found.zsh ]]; then
-    source /usr/share/doc/pkgfile/command-not-found.zsh
+# Offer to install missing package if command is not found
+if [[ -r /usr/share/zsh/command-not-found.zsh ]]; then
+    source /usr/share/zsh/command-not-found.zsh
     export PKGFILE_PROMPT_INSTALL_MISSING=1
 fi

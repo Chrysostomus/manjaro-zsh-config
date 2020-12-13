@@ -1,0 +1,7 @@
+# enable substitution for prompt
+setopt prompt_subst
+# Maia prompt
+PROMPT="%B%{$fg[cyan]%}%(4~|%-1~/.../%2~|%~)%u%b >%{$fg[cyan]%}>%B%(?.%{$fg[cyan]%}.%{$fg[red]%})>%{$reset_color%}%b "
+RPROMPT="%{$fg[red]%} %(?..[%?])" 
+# Print a greeting message when shell is started
+echo $USER@$HOST  $(uname -srm) $(lsb_release -rcs)

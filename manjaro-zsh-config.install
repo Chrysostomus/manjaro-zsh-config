@@ -1,4 +1,0 @@
-post_install() {
-	pkgfile -u &>/dev/null &
-	systemctl enable pkgfile-update.timer
-}

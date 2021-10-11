@@ -192,3 +192,8 @@ function mzc_termsupport_preexec {
 autoload -U add-zsh-hook
 add-zsh-hook precmd mzc_termsupport_precmd
 add-zsh-hook preexec mzc_termsupport_preexec
+
+# File and Dir colors for ls and other outputs
+export LS_OPTIONS='--color=auto'
+eval "$(dircolors -b)"
+alias ls='ls $LS_OPTIONS'

@@ -1,27 +1,28 @@
-# Apply different settigns for different terminals
-case $(basename "$(cat "/proc/$PPID/comm")") in
-  login)
-      source /usr/share/zsh/zsh-maia-prompt
-    	alias x='startx ~/.xinitrc'
-    ;;
-  *)
-      if [[ $TERM == "linux" ]]; then
-        # TTY does not have powerline fonts
-        source /usr/share/zsh/zsh-maia-prompt
-        alias x='startx ~/.xinitrc'
-      elif [[ "$USE_POWERLINE" == "true" ]]; then
-        # Use powerline
-        source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-        [[ ! -f /usr/share/zsh/p10k.zsh ]] || source /usr/share/zsh/p10k.zsh
-        source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-        ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-        ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
-      else
-        # Don't use powerline anyway
-        source /usr/share/zsh/zsh-maia-prompt
-        source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-        ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-        ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
-      fi
-    ;;
-esac
+() {
+  emulate -L zsh
+
+  # Determine terminal capabilities.
+  {
+    zmodload zsh/langinfo zsh/terminfo &&
+      [[ $langinfo[CODESET] == (utf|UTF)(-|)8 && $TERM != (dumb|linux) ]] &&
+      (( terminfo[colors] >= 256 ))
+  } 2>/dev/null
+
+  if (( $? )); then
+    # Use 8 colors and ASCII.
+    source /usr/share/zsh/p10k-portable.zsh
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'
+    local parent
+    if { parent=$(</proc/$PPID/comm) } 2>/dev/null && [[ ${parent:t} == login ]]; then
+      # Define `x` if our parent process is `login`.
+      alias x='startx ~/.xinitrc'
+    fi
+  else
+    # Use 256 colors and UNICODE.
+    source /usr/share/zsh/p10k.zsh
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
+  fi
+
+  source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+}

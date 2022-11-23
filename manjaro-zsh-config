@@ -55,9 +55,9 @@ bindkey '^H' backward-kill-word                                 # delete previou
 bindkey '^[[Z' undo                                             # Shift+tab undo last action
 
 ## Alias section 
-alias cp='f(){ cp ${1:--i} };f'                                 # Confirm before overwriting something
-alias df='f(){ df ${1:--h} };f'                                 # Human-readable sizes
-alias free='f(){ free ${1:--m} };f'                             # Show sizes in MB
+alias cp='f(){fo=${1:--i}; shift; cp $fo $*};f'                                           # Confirm before overwriting something
+alias df='f(){if test $# -eq 0;then opts=(-h);else opts=("$@");fi; df "$opts[@]"};f'      # Human-readable sizes
+alias free='f(){if test $# -eq 0;then opts=(-m);else opts=("$@");fi; free "$opts[@]"};f'  # Show sizes in MB
 alias gitu='git add . && git commit && git push'
 
 # Theming section  

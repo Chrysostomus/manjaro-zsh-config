@@ -54,10 +54,10 @@ bindkey '^[[1;5C' forward-word                                  #
 bindkey '^H' backward-kill-word                                 # delete previous word with ctrl+backspace
 bindkey '^[[Z' undo                                             # Shift+tab undo last action
 
-## Alias section 
-alias cp='f(){fo=${1:--i}; shift; cp $fo $*};f'                                           # Confirm before overwriting something
-alias df='f(){if test $# -eq 0;then opts=(-h);else opts=("$@");fi; df "$opts[@]"};f'      # Human-readable sizes
-alias free='f(){if test $# -eq 0;then opts=(-m);else opts=("$@");fi; free "$opts[@]"};f'  # Show sizes in MB
+## Alias section
+alias cp="cp -i"                                                # Confirm before overwriting something
+alias df='df -h'                                                # Human-readable sizes
+alias free='free -m'                                            # Show sizes in MB
 alias gitu='git add . && git commit && git push'
 
 # Theming section  

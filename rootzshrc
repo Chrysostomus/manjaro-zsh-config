@@ -10,7 +10,7 @@ setopt histignorealldups                                        # If a new comma
 setopt autocd                                                   # If only directory path is entered, cd there
 setopt interactivecomments                                      # Allow comments even in interactive shells
 
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'       # Case insensitive tab completion
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' # Case insensitive tab completion
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"         # Colored completion (different colors for dirs/files/etc)
 zstyle ':completion:*' rehash true                              # automatically find new executables in path 
 HISTFILE=~/.zhistory

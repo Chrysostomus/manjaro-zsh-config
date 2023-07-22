@@ -453,7 +453,11 @@
     # in this case.
     (( VCS_STATUS_HAS_UNSTAGED == -1 )) && res+=" ${modified}─"
 
-    typeset -g my_git_format="$res  "
+    if [[ $HAS_WIDECHARS == true ]]; then
+      typeset -g my_git_format="$res  "
+    else
+      typeset -g my_git_format="$res"
+    fi
   }
   functions -M my_git_formatter 2>/dev/null
 
